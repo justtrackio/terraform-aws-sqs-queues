@@ -1,10 +1,6 @@
-variable "alarm_topic_label_order" {
-  type        = list(string)
-  description = <<-EOT
-    The order in which the labels (ID elements) appear in the `id`.
-    Defaults to ["namespace", "environment", "stage", "name", "attributes"].
-    You can omit any of the 6 labels ("tenant" is the 6th), but at least one must be present.
-    EOT
+variable "alarm_topic_arn" {
+  type        = string
+  description = "Arn of the alarm sns topic"
   default     = null
 }
 
@@ -38,22 +34,10 @@ variable "queues" {
     })
     subscriptions = optional(map(object({
       enabled       = optional(bool, true)
-      stage         = optional(string, null)
-      name          = optional(string, null)
-      attributes    = optional(set(string), null)
       filter_policy = optional(string, null)
+      topic_arn     = optional(string, null)
     })))
   }))
   description = "Queues to be created"
   default     = {}
-}
-
-variable "topic_label_order" {
-  type        = list(string)
-  description = <<-EOT
-    The order in which the labels (ID elements) appear in the `id`.
-    Defaults to ["namespace", "environment", "stage", "name", "attributes"].
-    You can omit any of the 6 labels ("tenant" is the 6th), but at least one must be present.
-    EOT
-  default     = null
 }
