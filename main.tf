@@ -1,16 +1,5 @@
-module "alarm_topic_label" {
-  source  = "cloudposse/label/null"
-  version = "0.25.0"
-
-  label_order = var.alarm_topic_label_order
-
-  attributes = ["alarm"]
-
-  context = module.this.context
-}
-
 module "queue" {
-  source = "github.com/justtrackio/terraform-aws-sqs-queue?ref=v1.2.0"
+  source = "github.com/justtrackio/terraform-aws-sqs-queue?ref=v1.2.1"
 
   for_each = var.queues
 
@@ -22,7 +11,7 @@ module "queue" {
   alarm_evaluation_periods        = each.value.alarm.evaluation_periods
   alarm_datapoints_to_alarm       = each.value.alarm.datapoints_to_alarm
   alarm_threshold                 = each.value.alarm.threshold
-  alarm_topic_arn                 = "arn:aws:sns:${var.aws_region}:${var.aws_account_id}:${module.alarm_topic_label.id}"
+  alarm_topic_arn                 = var.alarm_topic_arn
   aws_account_id                  = var.aws_account_id
   aws_region                      = var.aws_region
   dead_letter_queue_arn           = try(each.value.queue.dead_letter_queue_create, true) ? module.dead[each.key].queue_arn : null
@@ -32,7 +21,7 @@ module "queue" {
   message_retention_seconds       = each.value.queue.message_retention_seconds
   principals_with_send_permission = ["*"]
   queue_name                      = try(each.value.queue.fifo_queue, false) ? "${each.key}.fifo" : each.key
-  source_arns                     = [for k, v in each.value.subscriptions != null ? each.value.subscriptions : {} : data.aws_sns_topic.topic[k].arn]
+  source_arns                     = [for k, v in each.value.subscriptions != null ? each.value.subscriptions : {} : v.topic_arn]
   visibility_timeout_seconds      = each.value.queue.visibility_timeout_seconds
 }
 

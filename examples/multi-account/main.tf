@@ -2,25 +2,33 @@ locals {
   namespace   = "namespace"
   environment = "environment"
   stage       = "stage"
-  subscriptions = {
+  topics = {
     "s-n-attribute1" = {
-      enabled    = true
       stage      = "stage"
       name       = "name"
       attributes = ["attribute1"]
     }
     "s-n-attribute2" = {
-      enabled    = true
       stage      = "stage"
       name       = "name"
       attributes = ["attribute2"]
+    }
+  }
+  subscriptions = {
+    "s-n-attribute1" = {
+      enabled   = true
+      topic_arn = module.topic["s-n-attribute1"].topic_arn
+    }
+    "s-n-attribute2" = {
+      enabled   = true
+      topic_arn = module.topic["s-n-attribute2"].topic_arn
     }
   }
 }
 
 module "topic" {
   source   = "github.com/justtrackio/terraform-aws-sns-topic?ref=v1.0.0"
-  for_each = local.subscriptions
+  for_each = local.topics
 
   providers = {
     aws = aws.topic_owner

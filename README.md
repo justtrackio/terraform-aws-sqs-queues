@@ -14,31 +14,27 @@ Terraform module which creates sqs queue(s)
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.45.0 |
-| <a name="provider_aws.topic_owner"></a> [aws.topic\_owner](#provider\_aws.topic\_owner) | >= 4.45.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_alarm_topic_label"></a> [alarm\_topic\_label](#module\_alarm\_topic\_label) | cloudposse/label/null | 0.25.0 |
 | <a name="module_dead"></a> [dead](#module\_dead) | github.com/justtrackio/terraform-aws-sqs-queue | v1.2.0 |
-| <a name="module_queue"></a> [queue](#module\_queue) | github.com/justtrackio/terraform-aws-sqs-queue | v1.2.0 |
+| <a name="module_queue"></a> [queue](#module\_queue) | github.com/justtrackio/terraform-aws-sqs-queue | v1.2.1 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
-| <a name="module_topic_label"></a> [topic\_label](#module\_topic\_label) | cloudposse/label/null | 0.25.0 |
 
 ## Resources
 
 | Name | Type |
 |------|------|
 | [aws_sns_topic_subscription.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic_subscription) | resource |
-| [aws_sns_topic.topic](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/sns_topic) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_additional_tag_map"></a> [additional\_tag\_map](#input\_additional\_tag\_map) | Additional key-value pairs to add to each map in `tags_as_list_of_maps`. Not added to `tags` or `id`.<br>This is for some rare cases where resources want additional configuration of tags<br>and therefore take a list of maps with tag key, value, and additional configuration. | `map(string)` | `{}` | no |
-| <a name="input_alarm_topic_label_order"></a> [alarm\_topic\_label\_order](#input\_alarm\_topic\_label\_order) | The order in which the labels (ID elements) appear in the `id`.<br>Defaults to ["namespace", "environment", "stage", "name", "attributes"].<br>You can omit any of the 6 labels ("tenant" is the 6th), but at least one must be present. | `list(string)` | `null` | no |
+| <a name="input_alarm_topic_arn"></a> [alarm\_topic\_arn](#input\_alarm\_topic\_arn) | Arn of the alarm sns topic | `string` | `null` | no |
 | <a name="input_attributes"></a> [attributes](#input\_attributes) | ID element. Additional attributes (e.g. `workers` or `cluster`) to add to `id`,<br>in the order they appear in the list. New attributes are appended to the<br>end of the list. The elements of the list are joined by the `delimiter`<br>and treated as a single ID element. | `list(string)` | `[]` | no |
 | <a name="input_aws_account_id"></a> [aws\_account\_id](#input\_aws\_account\_id) | AWS Account ID | `string` | n/a | yes |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS Region | `string` | n/a | yes |
@@ -54,12 +50,11 @@ Terraform module which creates sqs queue(s)
 | <a name="input_labels_as_tags"></a> [labels\_as\_tags](#input\_labels\_as\_tags) | Set of labels (ID elements) to include as tags in the `tags` output.<br>Default is to include all labels.<br>Tags with empty values will not be included in the `tags` output.<br>Set to `[]` to suppress all generated tags.<br>**Notes:**<br>  The value of the `name` tag, if included, will be the `id`, not the `name`.<br>  Unlike other `null-label` inputs, the initial setting of `labels_as_tags` cannot be<br>  changed in later chained modules. Attempts to change it will be silently ignored. | `set(string)` | <pre>[<br>  "default"<br>]</pre> | no |
 | <a name="input_name"></a> [name](#input\_name) | ID element. Usually the component or solution name, e.g. 'app' or 'jenkins'.<br>This is the only ID element not also included as a `tag`.<br>The "name" tag is set to the full `id` string. There is no tag with the value of the `name` input. | `string` | `null` | no |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | ID element. Usually an abbreviation of your organization name, e.g. 'eg' or 'cp', to help ensure generated IDs are globally unique | `string` | `null` | no |
-| <a name="input_queues"></a> [queues](#input\_queues) | Queues to be created | <pre>map(object({<br>    alarm = optional(object({<br>      create              = optional(bool, false)<br>      datapoints_to_alarm = optional(number, 3)<br>      evaluation_periods  = optional(number, 3)<br>      backlog_minutes     = optional(number, 3)<br>      period              = optional(number, 60)<br>      threshold           = optional(number, 0)<br>    }))<br>    queue = object({<br>      dead_letter_queue_create   = optional(bool, true)<br>      delay_seconds              = optional(number, null)<br>      fifo_queue                 = optional(bool, false)<br>      max_receive_count          = optional(number, null)<br>      message_retention_seconds  = optional(number, null)<br>      visibility_timeout_seconds = optional(number, null)<br>    })<br>    subscriptions = optional(map(object({<br>      enabled       = optional(bool, true)<br>      stage         = optional(string, null)<br>      name          = optional(string, null)<br>      attributes    = optional(set(string), null)<br>      filter_policy = optional(string, null)<br>    })))<br>  }))</pre> | `{}` | no |
+| <a name="input_queues"></a> [queues](#input\_queues) | Queues to be created | <pre>map(object({<br>    alarm = optional(object({<br>      create              = optional(bool, false)<br>      datapoints_to_alarm = optional(number, 3)<br>      evaluation_periods  = optional(number, 3)<br>      backlog_minutes     = optional(number, 3)<br>      period              = optional(number, 60)<br>      threshold           = optional(number, 0)<br>    }))<br>    queue = object({<br>      dead_letter_queue_create   = optional(bool, true)<br>      delay_seconds              = optional(number, null)<br>      fifo_queue                 = optional(bool, false)<br>      max_receive_count          = optional(number, null)<br>      message_retention_seconds  = optional(number, null)<br>      visibility_timeout_seconds = optional(number, null)<br>    })<br>    subscriptions = optional(map(object({<br>      enabled       = optional(bool, true)<br>      filter_policy = optional(string, null)<br>      topic_arn     = optional(string, null)<br>    })))<br>  }))</pre> | `{}` | no |
 | <a name="input_regex_replace_chars"></a> [regex\_replace\_chars](#input\_regex\_replace\_chars) | Terraform regular expression (regex) string.<br>Characters matching the regex will be removed from the ID elements.<br>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
 | <a name="input_stage"></a> [stage](#input\_stage) | ID element. Usually used to indicate role, e.g. 'prod', 'staging', 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Additional tags (e.g. `{'BusinessUnit': 'XYZ'}`).<br>Neither the tag keys nor the tag values will be modified by this module. | `map(string)` | `{}` | no |
 | <a name="input_tenant"></a> [tenant](#input\_tenant) | ID element \_(Rarely used, not included by default)\_. A customer identifier, indicating who this instance of a resource is for | `string` | `null` | no |
-| <a name="input_topic_label_order"></a> [topic\_label\_order](#input\_topic\_label\_order) | The order in which the labels (ID elements) appear in the `id`.<br>Defaults to ["namespace", "environment", "stage", "name", "attributes"].<br>You can omit any of the 6 labels ("tenant" is the 6th), but at least one must be present. | `list(string)` | `null` | no |
 
 ## Outputs
 
