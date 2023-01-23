@@ -27,7 +27,9 @@ locals {
 }
 
 module "topic" {
-  source   = "github.com/justtrackio/terraform-aws-sns-topic?ref=v1.0.0"
+  source  = "justtrackio/sns-topic/aws"
+  version = "1.2.0"
+
   for_each = local.topics
 
   providers = {
