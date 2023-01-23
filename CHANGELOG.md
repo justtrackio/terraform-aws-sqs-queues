@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0](https://github.com/justtrackio/terraform-aws-sqs-queues/compare/v1.0.1...v1.1.0) (2023-01-23)
+
+
+### Features
+
+* added principals_with_send_permission var for queue ([#4](https://github.com/justtrackio/terraform-aws-sqs-queues/issues/4)) ([be2f2fc](https://github.com/justtrackio/terraform-aws-sqs-queues/commit/be2f2fc741bd60f72727fbbff8de5608a6a053ae))
+
 ## [1.0.1](https://github.com/justtrackio/terraform-aws-sqs-queues/compare/v1.0.0...v1.0.1) (2023-01-06)
 
 
