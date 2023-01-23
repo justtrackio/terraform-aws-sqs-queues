@@ -16,7 +16,7 @@ data "aws_caller_identity" "identity" {}
 data "aws_region" "region" {}
 
 module "topic" {
-  source   = "github.com/justtrackio/terraform-aws-sns-topic?ref=v1.0.0"
+  source   = "github.com/justtrackio/terraform-aws-sns-topic?ref=v1.2.0"
   for_each = local.subscriptions
 
   alarm_create = false
