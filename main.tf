@@ -26,7 +26,7 @@ module "queue" {
 }
 
 module "dead" {
-  source = "github.com/justtrackio/terraform-aws-sqs-queue?ref=v1.2.0"
+  source = "github.com/justtrackio/terraform-aws-sqs-queue?ref=v1.2.1"
 
   for_each = { for k, v in var.queues : k => v if v.queue.dead_letter_queue_create }
 
