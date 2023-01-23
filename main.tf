@@ -1,5 +1,6 @@
 module "queue" {
-  source = "github.com/justtrackio/terraform-aws-sqs-queue?ref=v1.2.1"
+  source  = "justtrackio/sqs-queue/aws"
+  version = "1.2.2"
 
   for_each = var.queues
 
@@ -19,14 +20,15 @@ module "queue" {
   fifo_queue                      = each.value.queue.fifo_queue
   max_receive_count               = each.value.queue.max_receive_count
   message_retention_seconds       = each.value.queue.message_retention_seconds
-  principals_with_send_permission = ["*"]
+  principals_with_send_permission = each.value.queue.principals_with_send_permission
   queue_name                      = try(each.value.queue.fifo_queue, false) ? "${each.key}.fifo" : each.key
   source_arns                     = [for k, v in each.value.subscriptions != null ? each.value.subscriptions : {} : v.topic_arn]
   visibility_timeout_seconds      = each.value.queue.visibility_timeout_seconds
 }
 
 module "dead" {
-  source = "github.com/justtrackio/terraform-aws-sqs-queue?ref=v1.2.0"
+  source  = "justtrackio/sqs-queue/aws"
+  version = "1.2.2"
 
   for_each = { for k, v in var.queues : k => v if v.queue.dead_letter_queue_create }
 
