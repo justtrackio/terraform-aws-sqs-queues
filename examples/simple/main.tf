@@ -17,7 +17,7 @@ data "aws_region" "region" {}
 
 module "topic" {
   source  = "justtrackio/sns-topic/aws"
-  version = "1.2.0"
+  version = "1.3.0"
 
   for_each = local.subscriptions
 
