@@ -19,6 +19,7 @@ variable "queues" {
     alarm = optional(object({
       create              = optional(bool, false)
       datapoints_to_alarm = optional(number, 3)
+      description         = optional(string, null)
       evaluation_periods  = optional(number, 3)
       backlog_minutes     = optional(number, 3)
       period              = optional(number, 60)
