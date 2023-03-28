@@ -1,6 +1,6 @@
 module "queue" {
   source  = "justtrackio/sqs-queue/aws"
-  version = "1.2.2"
+  version = "1.4.0"
 
   for_each = var.queues
 
@@ -11,6 +11,7 @@ module "queue" {
   alarm_period                    = each.value.alarm.period
   alarm_evaluation_periods        = each.value.alarm.evaluation_periods
   alarm_datapoints_to_alarm       = each.value.alarm.datapoints_to_alarm
+  alarm_description               = each.value.alarm.description
   alarm_threshold                 = each.value.alarm.threshold
   alarm_topic_arn                 = var.alarm_topic_arn
   aws_account_id                  = var.aws_account_id
@@ -28,7 +29,7 @@ module "queue" {
 
 module "dead" {
   source  = "justtrackio/sqs-queue/aws"
-  version = "1.2.2"
+  version = "1.4.0"
 
   for_each = { for k, v in var.queues : k => v if v.queue.dead_letter_queue_create }
 
