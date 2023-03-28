@@ -1,3 +1,10 @@
+## [1.2.0](https://github.com/justtrackio/terraform-aws-sqs-queues/compare/v1.1.0...v1.2.0) (2023-03-28)
+
+
+### Features
+
+* update_sqs_module ([#14](https://github.com/justtrackio/terraform-aws-sqs-queues/issues/14)) ([cc00e01](https://github.com/justtrackio/terraform-aws-sqs-queues/commit/cc00e014c3c869e8b9ea2f660bdb32d7f964b844))
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
