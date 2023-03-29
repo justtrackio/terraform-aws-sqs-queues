@@ -28,7 +28,7 @@ locals {
 
 module "topic" {
   source  = "justtrackio/sns-topic/aws"
-  version = "1.2.0"
+  version = "1.4.1"
 
   for_each = local.topics
 
