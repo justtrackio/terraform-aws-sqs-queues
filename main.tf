@@ -1,6 +1,6 @@
 module "queue" {
   source  = "justtrackio/sqs-queue/aws"
-  version = "1.4.0"
+  version = "1.5.0"
 
   for_each = var.queues
 
@@ -29,7 +29,7 @@ module "queue" {
 
 module "dead" {
   source  = "justtrackio/sqs-queue/aws"
-  version = "1.4.0"
+  version = "1.5.0"
 
   for_each = { for k, v in var.queues : k => v if v.queue.dead_letter_queue_create }
 

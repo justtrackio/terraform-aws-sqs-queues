@@ -7,20 +7,20 @@ Terraform module which creates sqs queue(s)
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.40 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.67 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.40 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.67 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_dead"></a> [dead](#module\_dead) | justtrackio/sqs-queue/aws | 1.4.0 |
-| <a name="module_queue"></a> [queue](#module\_queue) | justtrackio/sqs-queue/aws | 1.4.0 |
+| <a name="module_dead"></a> [dead](#module\_dead) | justtrackio/sqs-queue/aws | 1.5.0 |
+| <a name="module_queue"></a> [queue](#module\_queue) | justtrackio/sqs-queue/aws | 1.5.0 |
 | <a name="module_this"></a> [this](#module\_this) | justtrackio/label/null | 0.26.0 |
 
 ## Resources
