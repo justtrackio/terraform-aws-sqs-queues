@@ -4,16 +4,6 @@ variable "alarm_topic_arn" {
   default     = null
 }
 
-variable "aws_account_id" {
-  type        = string
-  description = "AWS Account ID"
-}
-
-variable "aws_region" {
-  type        = string
-  description = "AWS Region"
-}
-
 variable "queues" {
   type = map(object({
     alarm = optional(object({
