@@ -1,6 +1,6 @@
 module "queue" {
   source  = "justtrackio/sqs-queue/aws"
-  version = "1.4.0"
+  version = "1.5.0"
 
   for_each = var.queues
 
@@ -14,8 +14,8 @@ module "queue" {
   alarm_description               = each.value.alarm.description
   alarm_threshold                 = each.value.alarm.threshold
   alarm_topic_arn                 = var.alarm_topic_arn
-  aws_account_id                  = var.aws_account_id
-  aws_region                      = var.aws_region
+  aws_account_id                  = module.this.aws_account_id
+  aws_region                      = module.this.aws_region
   dead_letter_queue_arn           = try(each.value.queue.dead_letter_queue_create, true) ? module.dead[each.key].queue_arn : null
   delay_seconds                   = each.value.queue.delay_seconds
   fifo_queue                      = each.value.queue.fifo_queue
@@ -29,14 +29,14 @@ module "queue" {
 
 module "dead" {
   source  = "justtrackio/sqs-queue/aws"
-  version = "1.4.0"
+  version = "1.5.0"
 
   for_each = { for k, v in var.queues : k => v if v.queue.dead_letter_queue_create }
 
   context = module.this.context
 
-  aws_region                = var.aws_region
-  aws_account_id            = var.aws_account_id
+  aws_region                = module.this.aws_region
+  aws_account_id            = module.this.aws_account_id
   fifo_queue                = each.value.queue.fifo_queue
   message_retention_seconds = each.value.queue.message_retention_seconds
   queue_name                = try(each.value.queue.fifo_queue, false) ? "${each.key}-dead.fifo" : "${each.key}-dead"
