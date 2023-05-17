@@ -21,12 +21,12 @@ module "topic" {
 
   for_each = local.subscriptions
 
-  alarm_create = false
-  namespace    = local.namespace
-  environment  = local.environment
-  stage        = each.value.stage
-  name         = each.value.name
-  attributes   = each.value.attributes
+  alarm_enabled = false
+  namespace     = local.namespace
+  environment   = local.environment
+  stage         = each.value.stage
+  name          = each.value.name
+  attributes    = each.value.attributes
 }
 
 module "queue" {
