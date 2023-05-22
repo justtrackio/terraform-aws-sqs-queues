@@ -28,7 +28,7 @@ locals {
 
 module "topic" {
   source  = "justtrackio/sns-topic/aws"
-  version = "1.3.0"
+  version = "1.5.1"
 
   for_each = local.topics
 
@@ -40,12 +40,12 @@ module "topic" {
     "arn:aws:iam::123456789123:root"
   ]
 
-  alarm_create = false
-  namespace    = local.namespace
-  environment  = local.environment
-  stage        = each.value.stage
-  name         = each.value.name
-  attributes   = each.value.attributes
+  alarm_enabled = false
+  namespace     = local.namespace
+  environment   = local.environment
+  stage         = each.value.stage
+  name          = each.value.name
+  attributes    = each.value.attributes
 }
 
 module "queue" {

@@ -1,12 +1,12 @@
 module "queue" {
   source  = "justtrackio/sqs-queue/aws"
-  version = "1.5.0"
+  version = "1.5.1"
 
   for_each = var.queues
 
   context = module.this.context
 
-  alarm_create                    = each.value.alarm.create
+  alarm_enabled                   = each.value.alarm.enabled
   alarm_minutes                   = each.value.alarm.backlog_minutes
   alarm_period                    = each.value.alarm.period
   alarm_evaluation_periods        = each.value.alarm.evaluation_periods
@@ -29,7 +29,7 @@ module "queue" {
 
 module "dead" {
   source  = "justtrackio/sqs-queue/aws"
-  version = "1.5.0"
+  version = "1.5.1"
 
   for_each = { for k, v in var.queues : k => v if v.queue.dead_letter_queue_create }
 
