@@ -6,7 +6,7 @@ module "queue" {
 
   context = module.this.context
 
-  alarm_enabled                   = each.value.alarm.create
+  alarm_enabled                   = each.value.alarm.enabled
   alarm_minutes                   = each.value.alarm.backlog_minutes
   alarm_period                    = each.value.alarm.period
   alarm_evaluation_periods        = each.value.alarm.evaluation_periods

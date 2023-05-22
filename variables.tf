@@ -7,7 +7,7 @@ variable "alarm_topic_arn" {
 variable "queues" {
   type = map(object({
     alarm = optional(object({
-      create              = optional(bool, false)
+      enabled             = optional(bool, false)
       datapoints_to_alarm = optional(number, 3)
       description         = optional(string, null)
       evaluation_periods  = optional(number, 3)
